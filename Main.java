@@ -14,6 +14,7 @@ public class Main
 	public static void main(String[] args)
 	{
 		Scanner scanner = new Scanner(System.in);
+		final double fi = (1.0+Math.sqrt(5))/2.0;
 		System.out.println("Введите число, основание базовой системы счисления и основание итоговой системы счисления (число, fib для фиббоначиевой, b для Бергмана, fact для факториальной)");
 		String inpnum, inpsys, finsys;
 		inpnum = scanner.nextLine();
@@ -38,13 +39,12 @@ public class Main
 				case "fact":
 					if (inpnum.toCharArray()[i] >= '0' && inpnum.toCharArray()[i] <= '9')
                                         {
-                                                dec += (int)(inpnum.toCharArray()[i]-'0')*fact(inpnum.length()-i);
+                                                dec += (int)(inpnum.toCharArray()[i]-'0')*fact(inpnum.length()-i-1);
                                         }
                                         else
                                         {
-                                                dec += (int)(inpnum.toCharArray()[i]-'A'+10)*fact(inpnum.length()-i);
+                                                dec += (int)(inpnum.toCharArray()[i]-'A'+10)*fact(inpnum.length()-i-1);
                                         }
-
 					break;
 				default:
 					if (inpnum.toCharArray()[i] >= '0' && inpnum.toCharArray()[i] <= '9')
@@ -77,6 +77,20 @@ public class Main
 					pos--;
 				}
                                 break;
+			case "fact":
+				int curfact = fact(10);
+				for (pos = 10; pos >= 1; pos--)
+				{
+					int cur = dec/curfact;
+					if ((cur > 0) || (ans != ""))
+					{
+						ans = ans + (char)(cur+'0');
+					}
+					dec = dec - cur*curfact;
+					curfact /= pos;
+				}
+				ans = ans + '0';
+				break;
 			default:
 				while (dec > 0)
 				{
